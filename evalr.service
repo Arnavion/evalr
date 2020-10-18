@@ -1,0 +1,13 @@
+[Unit]
+Description=evalr IRC bot for ##rust@freenode
+
+[Service]
+ExecStart=/var/lib/evalr/main.sh
+WorkingDirectory=~
+Restart=always
+RestartSec=5s
+User=evalr
+Group=evalr
+
+[Install]
+WantedBy=default.target

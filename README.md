@@ -1,6 +1,40 @@
 This is an IRC bot that evaluates code snippets using <https://play.rust-lang.org> and prints the results.
 
 
+# Dependencies
+
+Required:
+
+- `awk`, specifically `gawk`
+- `jq`
+- `openssl`
+
+Optional:
+
+- `make` - if you use the Makefile to install the services files
+
+
+# Install
+
+```sh
+# Install binaries and systemd service, and create service user.
+sudo make install
+
+# Create creds file. "IRC_PASSWORD" is optional.
+cat <<-EOF
+IRC_SERVER=...
+IRC_NICKNAME=...
+IRC_USERNAME=...
+IRC_PASSWORD=...
+EOF | sudo tee /var/lib/evalr/creds >/dev/null
+sudo chown evalr:evalr /var/lib/evalr/creds
+sudo chmod 0600 /var/lib/evalr/creds
+
+systemctl enable evalr
+systemctl start evalr
+```
+
+
 # License
 
 ```
