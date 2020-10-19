@@ -10,7 +10,7 @@ BEGIN {
 }
 
 {
-	gsub(/\r$/, "")
+	sub(/\r$/, "")
 	read_line()
 }
 
@@ -56,7 +56,7 @@ BEGIN {
 				message = message " " $i
 			}
 		}
-		gsub(highlight_regex, "", message)
+		sub(highlight_regex, "", message)
 
 		command = "./playground.sh"
 		printf "%s", message |& command
@@ -84,7 +84,7 @@ BEGIN {
 		if (substr(message, 1, 1) != "\x01") {
 			printf "=== Acting on request\n" > "/dev/stderr"
 
-			gsub(highlight_regex, "", message)
+			sub(highlight_regex, "", message)
 
 			command = "./playground.sh"
 			printf "%s", message |& command
