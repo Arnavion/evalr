@@ -30,11 +30,12 @@ BEGIN {
 
 /^:NickServ!NickServ@services\. NOTICE / {
 	if ($3 == IRC_NICKNAME) {
-		message = ""
-		for (i = 4; i <= NF; i++) {
-			message = message $i " "
+		message = $4
+		if (sub(/^:/, "", message) == 1) {
+			for (i = 5; i <= NF; i++) {
+				message = message " " $i
+			}
 		}
-		gsub(/^:/, "", message)
 
 		if (message ~ /^You are now identified for /) {
 			write_line("JOIN ##rust")
@@ -49,11 +50,13 @@ BEGIN {
 		split(substr($1, 2), nick_parts, "!")
 		nick = nick_parts[1]
 
-		message = ""
-		for (i = 4; i <= NF; i++) {
-			message = message $i " "
+		message = $4
+		if (sub(/^:/, "", message) == 1) {
+			for (i = 5; i <= NF; i++) {
+				message = message " " $i
+			}
 		}
-		gsub(channel_privmsg_regex, "", message)
+		gsub(highlight_regex, "", message)
 
 		command = "./playground.sh"
 		printf "%s", message |& command
@@ -71,11 +74,12 @@ BEGIN {
 		split(substr($1, 2), nick_parts, "!")
 		nick = nick_parts[1]
 
-		message = ""
-		for (i = 4; i <= NF; i++) {
-			message = message $i " "
+		message = $4
+		if (sub(/^:/, "", message) == 1) {
+			for (i = 5; i <= NF; i++) {
+				message = message " " $i
+			}
 		}
-		gsub(/^:/, "", message)
 
 		if (substr(message, 1, 1) != "\x01") {
 			printf "=== Acting on request\n" > "/dev/stderr"
