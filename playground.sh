@@ -104,7 +104,13 @@ create_gist=0
 if [ -n "$response" ] && (<<< "$response" jq -er '.success' >/dev/null); then
 	output="$(<<< "$response" jq -r '.stdout')"
 else
-	output="$( (<<< "$response" jq -r '.stderr' | grep '^error') || printf 'unknown error')"
+	output="$(
+		(
+			<<< "$response" jq -r '.stderr' |
+			grep -E "^(error|thread 'main' panicked at)"
+		) ||
+		printf 'unknown error'
+	)"
 	create_gist=1
 fi
 
