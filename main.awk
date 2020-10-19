@@ -14,7 +14,7 @@ BEGIN {
 	read_line()
 }
 
-/^PING\r$/ {
+/^PING$/ {
 	write_line("PONG")
 }
 
