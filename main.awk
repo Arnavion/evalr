@@ -30,12 +30,7 @@ BEGIN {
 
 /^:NickServ!NickServ@services\. NOTICE / {
 	if ($3 == IRC_NICKNAME) {
-		message = $4
-		if (sub(/^:/, "", message) == 1) {
-			for (i = 5; i <= NF; i++) {
-				message = message " " $i
-			}
-		}
+		message = get_variadic(4)
 
 		if (message ~ /^You are now identified for /) {
 			write_line("JOIN ##rust")
@@ -50,12 +45,7 @@ BEGIN {
 		split(substr($1, 2), nick_parts, "!")
 		nick = nick_parts[1]
 
-		message = $4
-		if (sub(/^:/, "", message) == 1) {
-			for (i = 5; i <= NF; i++) {
-				message = message " " $i
-			}
-		}
+		message = get_variadic(4)
 		sub(highlight_regex, "", message)
 
 		command = "./playground.sh"
@@ -74,12 +64,7 @@ BEGIN {
 		split(substr($1, 2), nick_parts, "!")
 		nick = nick_parts[1]
 
-		message = $4
-		if (sub(/^:/, "", message) == 1) {
-			for (i = 5; i <= NF; i++) {
-				message = message " " $i
-			}
-		}
+		message = get_variadic(4)
 
 		if (substr(message, 1, 1) != "\x01") {
 			printf "=== Acting on request\n" > "/dev/stderr"
@@ -106,4 +91,18 @@ function write_line(line) {
 	printf ">>> %s\n", line > "/dev/stderr"
 	printf "%s\r\n", line
 	fflush()
+}
+
+function get_variadic(i) {
+	first = $i
+	if (sub(/^:/, "", first) == 0) {
+		return first
+	}
+
+	start_at = 0
+	for (j = 1; j < i; j++) {
+		start_at += length($j) + length(" ")
+	}
+	start_at += length(":")
+	return substr($0, start_at + 1)
 }
