@@ -1,13 +1,12 @@
 BEGIN {
-	write_line(sprintf("NICK %s", IRC_NICKNAME))
-	write_line(sprintf("USER %s 0 * :Bot owned by Arnavion", IRC_USERNAME))
+	write_line("NICK " IRC_NICKNAME)
+	write_line("USER " IRC_USERNAME " 0 * :Bot owned by Arnavion")
 	if (IRC_PASSWORD != "") {
-		write_line(sprintf("PRIVMSG nickserv :IDENTIFY %s %s", IRC_USERNAME, IRC_PASSWORD))
+		write_line("PRIVMSG nickserv :IDENTIFY " IRC_USERNAME " " IRC_PASSWORD)
 	}
 
-	channel_privmsg_regex = sprintf("^:?%s:", IRC_NICKNAME)
-	privmsg_regex = sprintf("^:?%s:", IRC_NICKNAME)
-	highlight_regex = sprintf("^%s:", IRC_NICKNAME)
+	channel_privmsg_regex = "^:?" IRC_NICKNAME ":"
+	highlight_regex = "^" IRC_NICKNAME ":"
 }
 
 {
@@ -20,7 +19,7 @@ BEGIN {
 }
 
 /^PING / {
-	write_line(sprintf("PONG %s", $2))
+	write_line("PONG " $2)
 }
 
 /^[^ ]+ 001 / {
@@ -33,7 +32,7 @@ BEGIN {
 	if ($3 == IRC_NICKNAME) {
 		message = ""
 		for (i = 4; i <= NF; i++) {
-			message = sprintf("%s%s ", message, $i)
+			message = message $i " "
 		}
 		gsub(/^:/, "", message)
 
@@ -52,7 +51,7 @@ BEGIN {
 
 		message = ""
 		for (i = 4; i <= NF; i++) {
-			message = sprintf("%s%s ", message, $i)
+			message = message $i " "
 		}
 		gsub(channel_privmsg_regex, "", message)
 
@@ -61,7 +60,7 @@ BEGIN {
 		fflush()
 		close(command, "to")
 		while ((command |& getline) > 0) {
-			write_line(sprintf("NOTICE ##rust :%s: %s", nick, $0))
+			write_line("NOTICE ##rust :" nick ": " $0)
 		}
 		close(command)
 	}
@@ -74,7 +73,7 @@ BEGIN {
 
 		message = ""
 		for (i = 4; i <= NF; i++) {
-			message = sprintf("%s%s ", message, $i)
+			message = message $i " "
 		}
 		gsub(/^:/, "", message)
 
@@ -88,7 +87,7 @@ BEGIN {
 			fflush()
 			close(command, "to")
 			while ((command |& getline) > 0) {
-				write_line(sprintf("PRIVMSG %s :%s", nick, $0))
+				write_line("PRIVMSG " nick " :" $0)
 			}
 			close(command)
 		}
