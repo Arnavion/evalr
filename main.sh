@@ -4,16 +4,12 @@ set -euo pipefail
 
 . creds
 
-rm -f server
-trap 'rm -f server' EXIT
-mkfifo server
+coproc GAWK {
+	gawk \
+		-f main.awk \
+		-v "IRC_NICKNAME=$IRC_NICKNAME" \
+		-v "IRC_USERNAME=$IRC_USERNAME" \
+		-v "IRC_PASSWORD=${IRC_PASSWORD:-}"
+}
 
-# server is a fifo
-#
-# shellcheck disable=SC2094
-<server gawk \
-	-f main.awk \
-	-v "IRC_NICKNAME=$IRC_NICKNAME" \
-	-v "IRC_USERNAME=$IRC_USERNAME" \
-	-v "IRC_PASSWORD=${IRC_PASSWORD:-}" |
-	openssl s_client -connect "$IRC_SERVER" -quiet >server
+<&"${GAWK[0]}" openssl s_client -connect "$IRC_SERVER" -quiet >&"${GAWK[1]}"
