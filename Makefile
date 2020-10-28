@@ -1,5 +1,8 @@
 .PHONY: install
 
+test:
+	shellcheck -x *.sh
+
 install:
 	if ! /bin/getent group evalr >/dev/null; then \
 		/sbin/groupadd --system evalr; \

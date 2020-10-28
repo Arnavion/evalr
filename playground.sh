@@ -31,6 +31,9 @@ while :; do
 			;;
 
 		'#!['*)
+			# shellcheck disable=SC2003
+			#
+			# Ref: https://github.com/koalaman/shellcheck/issues/1402
 			attr_end="$(expr index "$message" ']')"
 			attrs="$(printf '%s%s\n' "$attrs" "${message:0:$attr_end}")"
 			message="${message:$attr_end}"

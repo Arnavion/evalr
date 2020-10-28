@@ -8,6 +8,9 @@ rm -f server
 trap 'rm -f server' EXIT
 mkfifo server
 
+# server is a fifo
+#
+# shellcheck disable=SC2094
 <server awk \
 	-f main.awk \
 	-v "IRC_NICKNAME=$IRC_NICKNAME" \
