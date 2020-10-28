@@ -5,7 +5,7 @@ This is an IRC bot that evaluates code snippets using <https://play.rust-lang.or
 
 Required:
 
-- `awk`, specifically `gawk`
+- `gawk`
 - `jq`
 - `openssl`
 

@@ -11,7 +11,7 @@ mkfifo server
 # server is a fifo
 #
 # shellcheck disable=SC2094
-<server awk \
+<server gawk \
 	-f main.awk \
 	-v "IRC_NICKNAME=$IRC_NICKNAME" \
 	-v "IRC_USERNAME=$IRC_USERNAME" \
