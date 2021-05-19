@@ -9,7 +9,7 @@ install:
 	fi
 
 	if ! /bin/getent passwd evalr >/dev/null; then \
-		/sbin/useradd --system --gid evalr --commend 'evalr user' --shell /sbin/nologin --home-dir /var/lib/evalr --create-home evalr; \
+		/sbin/useradd --system --gid evalr --comment 'evalr user' --shell /sbin/nologin --home-dir /var/lib/evalr --create-home evalr; \
 	fi
 
 	cp main.awk main.sh playground.sh /var/lib/evalr/

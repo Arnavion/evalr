@@ -21,17 +21,16 @@ Optional:
 sudo make install
 
 # Create creds file. "IRC_PASSWORD" is optional.
-cat <<-EOF
+cat <<-EOF | sudo tee /var/lib/evalr/creds >/dev/null
 IRC_SERVER=...
 IRC_NICKNAME=...
 IRC_USERNAME=...
 IRC_PASSWORD=...
-EOF | sudo tee /var/lib/evalr/creds >/dev/null
+EOF
 sudo chown evalr:evalr /var/lib/evalr/creds
 sudo chmod 0600 /var/lib/evalr/creds
 
-systemctl enable evalr
-systemctl start evalr
+sudo systemctl enable --now evalr
 ```
 
 
