@@ -28,7 +28,7 @@ BEGIN {
 	}
 }
 
-/^:NickServ!NickServ@services\. NOTICE / {
+/^:NickServ!NickServ@services\.[^ ]* NOTICE / {
 	if ($3 == IRC_NICKNAME) {
 		message = get_variadic(4)
 
