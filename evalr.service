@@ -1,5 +1,5 @@
 [Unit]
-Description=evalr IRC bot for ##rust@freenode
+Description=evalr IRC bot for ##rust@irc.libera.chat
 
 [Service]
 ExecStart=/var/lib/evalr/main.sh

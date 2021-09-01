@@ -94,7 +94,7 @@ response="$(
 				--max-time 10 \
 				--silent \
 				-X POST \
-				-H 'user-agent: irc.freenode.net/Arnavion' \
+				-H 'user-agent: irc.libera.chat/Arnavion' \
 				-H 'accept: application/json' \
 				-H 'content-type: application/json' \
 				--data-binary @- \
@@ -128,7 +128,7 @@ if (( create_gist == 1 )); then
 	<<< "$request_body_base" curl \
 		--max-time 10 \
 		--silent \
-		-H 'user-agent: irc.freenode.net/Arnavion' \
+		-H 'user-agent: irc.libera.chat/Arnavion' \
 		-H 'accept: application/json' \
 		-H 'content-type: application/json' \
 		--data-binary @- \
