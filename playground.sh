@@ -17,17 +17,17 @@ while :; do
 
 		'--beta'|'--beta '*)
 			channel='beta'
-			message="${message#--beta }"
+			message="${message#--beta}"
 			;;
 
 		'--nightly'|'--nightly '*)
 			channel='nightly'
-			message="${message#--nightly }"
+			message="${message#--nightly}"
 			;;
 
 		'--release'|'--release '*)
 			mode='release'
-			message="${message#--release }"
+			message="${message#--release}"
 			;;
 
 		'#!['*)
