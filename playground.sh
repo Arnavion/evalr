@@ -133,7 +133,10 @@ if (( create_gist == 1 )); then
 		-H 'content-type: application/json' \
 		--data-binary @- \
 		'https://play.rust-lang.org/meta/gist/' |
-		jq -r '"https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=\(.id)"'
+		jq -r \
+			--arg channel "$channel" \
+			--arg mode "$mode" \
+			'"https://play.rust-lang.org/?version=\($channel)&mode=\($mode)&edition=2018&gist=\(.id)"'
 else
 	printf '%s\n' "$irc_output"
 fi
