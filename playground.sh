@@ -84,7 +84,7 @@ response="$(
 		'$request_body_base + {
 			"channel": $channel,
 			"mode": $mode,
-			"edition": "2018",
+			"edition": "2021",
 			"crateType": "bin",
 			"tests": false,
 			"backtrace": false
@@ -136,7 +136,7 @@ if (( create_gist == 1 )); then
 		jq -r \
 			--arg channel "$channel" \
 			--arg mode "$mode" \
-			'"https://play.rust-lang.org/?version=\($channel)&mode=\($mode)&edition=2018&gist=\(.id)"'
+			'"https://play.rust-lang.org/?version=\($channel)&mode=\($mode)&edition=2021&gist=\(.id)"'
 else
 	printf '%s\n' "$irc_output"
 fi
