@@ -118,7 +118,7 @@ else
 fi
 
 irc_output="$(<<< "$output" head -n 1 | head -c 64)"
-if [ "$irc_output" != "$output" ]; then
+if [ "$irc_output" != "$output" ] && [ "$(printf '%s\n()' "$irc_output")" != "$output" ]; then
 	create_gist=1
 fi
 
