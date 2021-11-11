@@ -7,6 +7,7 @@ message="$(cat)"
 attrs=''
 channel='stable'
 code=''
+edition='2021'
 mode='debug'
 
 while :; do
@@ -18,6 +19,21 @@ while :; do
 		'--beta'|'--beta '*)
 			channel='beta'
 			message="${message#--beta}"
+			;;
+
+		'--2015'|'--2015 '*)
+			edition='2015'
+			message="${message#--2015}"
+			;;
+
+		'--2018'|'--2018 '*)
+			edition='2018'
+			message="${message#--2018}"
+			;;
+
+		'--2021'|'--2021 '*)
+			edition='2021'
+			message="${message#--2021}"
 			;;
 
 		'--nightly'|'--nightly '*)
@@ -80,11 +96,12 @@ response="$(
 	jq -cn \
 		--argjson request_body_base "$request_body_base" \
 		--arg channel "$channel" \
+		--arg edition "$edition" \
 		--arg mode "$mode" \
 		'$request_body_base + {
 			"channel": $channel,
 			"mode": $mode,
-			"edition": "2021",
+			"edition": $edition,
 			"crateType": "bin",
 			"tests": false,
 			"backtrace": false
@@ -135,8 +152,9 @@ if (( create_gist == 1 )); then
 		'https://play.rust-lang.org/meta/gist/' |
 		jq -r \
 			--arg channel "$channel" \
+			--arg edition "$edition" \
 			--arg mode "$mode" \
-			'"https://play.rust-lang.org/?version=\($channel)&mode=\($mode)&edition=2021&gist=\(.id)"'
+			'"https://play.rust-lang.org/?version=\($channel)&mode=\($mode)&edition=\($edition)&gist=\(.id)"'
 else
 	printf '%s\n' "$irc_output"
 fi
