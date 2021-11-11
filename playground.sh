@@ -59,7 +59,7 @@ request_body_base="$(
 				$attrs +
 				"fn main() { println!(\"{:?}\", {\n\n" +
 				$code +
-				"\n\n}); }"
+				"\n\n}); }\n"
 			)
 		}'
 )"
