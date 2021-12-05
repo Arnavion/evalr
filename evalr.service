@@ -2,8 +2,7 @@
 Description=evalr IRC bot for ##rust@irc.libera.chat
 
 [Service]
-ExecStart=/var/lib/evalr/main.sh
-WorkingDirectory=~
+ExecStart=/usr/local/bin/evalr
 Restart=always
 RestartSec=5s
 User=evalr

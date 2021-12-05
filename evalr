@@ -2,11 +2,11 @@
 
 set -euo pipefail
 
-. creds
+. /etc/evalr/creds
 
 coproc GAWK {
 	gawk \
-		-f main.awk \
+		-f /usr/libexec/evalr/main.awk \
 		-v "IRC_NICKNAME=$IRC_NICKNAME" \
 		-v "IRC_USERNAME=$IRC_USERNAME" \
 		-v "IRC_PASSWORD=${IRC_PASSWORD:-}"

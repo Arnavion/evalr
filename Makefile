@@ -9,11 +9,17 @@ install:
 	fi
 
 	if ! /bin/getent passwd evalr >/dev/null; then \
-		/sbin/useradd --system --gid evalr --comment 'evalr user' --shell /sbin/nologin --home-dir /var/lib/evalr --create-home evalr; \
+		/sbin/useradd --system --gid evalr --comment 'evalr user' --shell /sbin/nologin --no-create-home evalr; \
 	fi
 
-	cp main.awk main.sh playground.sh /var/lib/evalr/
-	chown evalr:evalr /var/lib/evalr/{main.awk,main.sh,playground.sh}
+	mkdir -p /usr/local/bin/
+	cp --no-preserve=ownership evalr /usr/local/bin/evalr
+
+	mkdir -p /usr/libexec/evalr/
+	cp main.awk playground.sh /usr/libexec/evalr/
+	chown -R evalr:evalr /usr/libexec/evalr/
+
+	mkdir -p /etc/evalr/
 
 	mkdir -p /etc/systemd/system/
 	cp evalr.service /etc/systemd/system/

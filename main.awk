@@ -48,7 +48,7 @@ BEGIN {
 		message = get_variadic(4)
 		sub(highlight_regex, "", message)
 
-		command = "./playground.sh"
+		command = "/usr/libexec/evalr/playground.sh"
 		printf "%s", message |& command
 		fflush()
 		close(command, "to")
@@ -71,7 +71,7 @@ BEGIN {
 
 			sub(highlight_regex, "", message)
 
-			command = "./playground.sh"
+			command = "/usr/libexec/evalr/playground.sh"
 			printf "%s", message |& command
 			fflush()
 			close(command, "to")
