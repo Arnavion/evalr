@@ -2,6 +2,9 @@
 
 set -euo pipefail
 
+# PLAYGROUND_BASE_URI='https://play.rust-lang.org/'
+PLAYGROUND_BASE_URI='https://play.integer32.com/'
+
 message="$(cat)"
 
 attrs=''
@@ -115,7 +118,7 @@ response="$(
 				-H 'accept: application/json' \
 				-H 'content-type: application/json' \
 				--data-binary @- \
-				'https://play.rust-lang.org/execute' ||
+				"${PLAYGROUND_BASE_URI}execute" ||
 			:
 		)
 )"
@@ -149,12 +152,13 @@ if (( create_gist == 1 )); then
 		-H 'accept: application/json' \
 		-H 'content-type: application/json' \
 		--data-binary @- \
-		'https://play.rust-lang.org/meta/gist/' |
+		"${PLAYGROUND_BASE_URI}meta/gist/" |
 		jq -r \
+			--arg playground_base_uri "$PLAYGROUND_BASE_URI" \
 			--arg channel "$channel" \
 			--arg edition "$edition" \
 			--arg mode "$mode" \
-			'"https://play.rust-lang.org/?version=\($channel)&mode=\($mode)&edition=\($edition)&gist=\(.id)"'
+			'"\($playground_base_uri)?version=\($channel)&mode=\($mode)&edition=\($edition)&gist=\(.id)"'
 else
 	printf '%s\n' "$irc_output"
 fi
