@@ -1,12 +1,52 @@
 [Unit]
 Description=evalr IRC bot for ##rust@irc.libera.chat
 
+
 [Service]
 ExecStart=/usr/local/bin/evalr
 Restart=always
 RestartSec=5s
 User=evalr
 Group=evalr
+
+# https://www.freedesktop.org/software/systemd/man/systemd.exec.html#Paths
+ProtectProc=invisible
+ProcSubset=pid
+
+# https://www.freedesktop.org/software/systemd/man/systemd.exec.html#Capabilities
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+# https://www.freedesktop.org/software/systemd/man/systemd.exec.html#Security
+NoNewPrivileges=yes
+
+# https://www.freedesktop.org/software/systemd/man/systemd.exec.html#Process%20Properties
+UMask=0077
+
+# https://www.freedesktop.org/software/systemd/man/systemd.exec.html#Sandboxing
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+PrivateNetwork=no
+PrivateIPC=yes
+PrivateUsers=yes
+ProtectHostname=yes
+ProtectClock=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_INET AF_INET6
+RestrictNamespaces=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+RemoveIPC=yes
+SystemCallFilter=@basic-io brk fadvise64 @file-system getrandom ioctl @io-event mprotect @network-io pipe @process @signal sysinfo uname
+SystemCallArchitectures=native
+
 
 [Install]
 WantedBy=default.target
