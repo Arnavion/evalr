@@ -111,6 +111,7 @@ response="$(
 		}' |
 		(
 			curl \
+				--location \
 				--max-time 10 \
 				--silent \
 				-X POST \
@@ -146,13 +147,14 @@ if (( create_gist == 1 )); then
 	printf '%s ...\n' "$irc_output"
 
 	<<< "$request_body_base" curl \
+		--location \
 		--max-time 10 \
 		--silent \
 		-H 'user-agent: irc.libera.chat/Arnavion' \
 		-H 'accept: application/json' \
 		-H 'content-type: application/json' \
 		--data-binary @- \
-		"${PLAYGROUND_BASE_URI}meta/gist/" |
+		"${PLAYGROUND_BASE_URI}meta/gist" |
 		jq -r \
 			--arg playground_base_uri "$PLAYGROUND_BASE_URI" \
 			--arg channel "$channel" \
