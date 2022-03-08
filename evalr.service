@@ -44,7 +44,7 @@ MemoryDenyWriteExecute=yes
 RestrictRealtime=yes
 RestrictSUIDSGID=yes
 RemoveIPC=yes
-SystemCallFilter=@basic-io brk fadvise64 @file-system getrandom ioctl @io-event mprotect @network-io pipe @process @signal sysinfo uname
+SystemCallFilter=@basic-io brk fadvise64 @file-system getrandom ioctl @io-event madvise mprotect @network-io pipe @process @signal sysinfo uname
 SystemCallArchitectures=native
 
 
