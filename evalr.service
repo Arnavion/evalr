@@ -26,6 +26,7 @@ UMask=0077
 # https://www.freedesktop.org/software/systemd/man/systemd.exec.html#Sandboxing
 ProtectSystem=strict
 ProtectHome=yes
+RuntimeDirectory=evalr
 PrivateTmp=yes
 PrivateDevices=yes
 PrivateNetwork=no

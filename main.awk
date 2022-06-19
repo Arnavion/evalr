@@ -12,6 +12,10 @@ BEGIN {
 {
 	sub(/\r$/, "")
 	read_line()
+	command = "/usr/bin/touch " XDG_RUNTIME_DIR "/last-event"
+	print "" |& command
+	while ((command |& getline) > 0) { }
+	close(command)
 }
 
 /^PING$/ {

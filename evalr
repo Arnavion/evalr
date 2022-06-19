@@ -4,12 +4,28 @@ set -euo pipefail
 
 . /etc/evalr/creds
 
-coproc GAWK {
-	gawk \
-		-f /usr/libexec/evalr/main.awk \
-		-v "IRC_NICKNAME=$IRC_NICKNAME" \
-		-v "IRC_USERNAME=$IRC_USERNAME" \
-		-v "IRC_PASSWORD=${IRC_PASSWORD:-}"
-}
+XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/evalr}"
 
-<&"${GAWK[0]}" openssl s_client -connect "$IRC_SERVER" -quiet >&"${GAWK[1]}"
+(
+	coproc GAWK {
+		gawk \
+			-f /usr/libexec/evalr/main.awk \
+			-v "IRC_NICKNAME=$IRC_NICKNAME" \
+			-v "IRC_USERNAME=$IRC_USERNAME" \
+			-v "IRC_PASSWORD=${IRC_PASSWORD:-}" \
+			-v "XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR"
+	}
+
+	<&"${GAWK[0]}" openssl s_client -connect "$IRC_SERVER" -quiet >&"${GAWK[1]}"
+) &
+
+while sleep 60; do
+	if [ -f "$XDG_RUNTIME_DIR/last-event" ]; then
+		time_since_last_event="$(( $(date +%s) - $(stat -c '%Y' "$XDG_RUNTIME_DIR/last-event") ))"
+		if (( time_since_last_event > 240 )); then
+			break
+		fi
+	fi
+done
+
+exit 1
