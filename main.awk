@@ -28,7 +28,7 @@ BEGIN {
 
 /^[^ ]+ 001 / {
 	if (IRC_PASSWORD == "") {
-		write_line("JOIN ##rust")
+		write_line("JOIN " IRC_CHANNEL)
 	}
 }
 
@@ -37,12 +37,12 @@ BEGIN {
 		message = get_variadic(4)
 
 		if (message ~ /^You are now identified for /) {
-			write_line("JOIN ##rust")
+			write_line("JOIN " IRC_CHANNEL)
 		}
 	}
 }
 
-/^[^ ]+ PRIVMSG ##rust / {
+$0 ~ "^[^ ]+ PRIVMSG " IRC_CHANNEL " " {
 	if ($4 ~ channel_privmsg_regex) {
 		printf "=== Acting on request\n" > "/dev/stderr"
 
@@ -57,7 +57,7 @@ BEGIN {
 		fflush()
 		close(command, "to")
 		while ((command |& getline) > 0) {
-			write_line("NOTICE ##rust :" nick ": " $0)
+			write_line("NOTICE " IRC_CHANNEL " :" nick ": " $0)
 		}
 		close(command)
 	}
