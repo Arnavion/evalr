@@ -7,7 +7,7 @@ PLAYGROUND_BASE_URI='https://play.integer32.com/'
 
 message="$(cat)"
 
-attrs=''
+attrs=()
 channel='stable'
 code=''
 edition='2021'
@@ -50,12 +50,8 @@ while :; do
 			;;
 
 		'#!['*)
-			# shellcheck disable=SC2003
-			#
-			# Ref: https://github.com/koalaman/shellcheck/issues/1402
-			attr_end="$(expr index "$message" ']')"
-			attrs="$(printf '%s%s\n' "$attrs" "${message:0:$attr_end}")"
-			message="${message:$attr_end}"
+			attrs+=("${message%%]*}]")
+			message="${message#*]}"
 			;;
 
 		*)
@@ -71,11 +67,12 @@ fi
 
 request_body_base="$(
 	jq -cn \
-		--arg attrs "$attrs" \
+		--arg attrs "$(for attr in "${attrs[@]}"; do printf '%s\n' "$attr"; done)" \
 		--arg code "$code" \
 		'{
 			"code": (
 				$attrs +
+				(if ($attrs | length) > 0 then "\n" else "" end) +
 				"fn main() { println!(\"{:?}\", {\n\n" +
 				$code +
 				"\n\n}); }\n"
