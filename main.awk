@@ -5,8 +5,8 @@ BEGIN {
 		write_line("PRIVMSG nickserv :IDENTIFY " IRC_USERNAME " " IRC_PASSWORD)
 	}
 
-	channel_privmsg_regex = "^:?" IRC_NICKNAME ":"
-	highlight_regex = "^" IRC_NICKNAME ":"
+	channel_privmsg_regex = "^:?" IRC_NICKNAME "[:,]"
+	highlight_regex = "^" IRC_NICKNAME "[:,]"
 }
 
 {
