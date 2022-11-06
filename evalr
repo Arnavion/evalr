@@ -26,6 +26,8 @@ while sleep 60; do
 		if (( time_since_last_event > 240 )); then
 			break
 		fi
+	else
+		break
 	fi
 done
 
