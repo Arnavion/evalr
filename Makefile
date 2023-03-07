@@ -6,6 +6,10 @@ test:
 install:
 	mkdir -p /etc/sysusers.d/
 	cp --no-preserve=ownership evalr.sysusers /etc/sysusers.d/evalr.conf
+	if ! getent passwd evalr; then \
+		systemctl restart systemd-sysusers; \
+		getent passwd evalr; \
+	fi
 
 	mkdir -p /usr/local/bin/
 	cp --no-preserve=ownership evalr /usr/local/bin/evalr
