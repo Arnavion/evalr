@@ -3,7 +3,7 @@
 set -euo pipefail
 shopt -s inherit_errexit
 
-. /etc/evalr/creds
+. "${CREDENTIALS_DIRECTORY}/creds"
 
 XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/evalr}"
 

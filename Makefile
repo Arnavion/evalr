@@ -4,13 +4,6 @@ test:
 	shellcheck -x *.sh
 
 install:
-	mkdir -p /etc/sysusers.d/
-	cp --no-preserve=ownership evalr.sysusers /etc/sysusers.d/evalr.conf
-	if ! getent passwd evalr; then \
-		systemctl restart systemd-sysusers; \
-		getent passwd evalr; \
-	fi
-
 	mkdir -p /usr/local/bin/
 	cp --no-preserve=ownership evalr /usr/local/bin/evalr
 
@@ -18,8 +11,7 @@ install:
 	cp --no-preserve=ownership main.awk playground.sh /usr/libexec/evalr/
 
 	mkdir -p /etc/evalr/
-	chown evalr:evalr /etc/evalr
-	chmod 0500 /etc/evalr
+	chmod 0700 /etc/evalr
 
 	mkdir -p /etc/systemd/system/
 	cp --no-preserve=ownership evalr.service /etc/systemd/system/

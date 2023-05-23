@@ -6,12 +6,13 @@ Description=evalr IRC bot for ##rust@irc.libera.chat
 ExecStart=/usr/local/bin/evalr
 Restart=always
 RestartSec=5s
-User=evalr
-Group=evalr
 
 # https://www.freedesktop.org/software/systemd/man/systemd.exec.html#Paths
 ProtectProc=invisible
 ProcSubset=pid
+
+# https://www.freedesktop.org/software/systemd/man/systemd.exec.html#User/Group%20Identity
+DynamicUser=yes
 
 # https://www.freedesktop.org/software/systemd/man/systemd.exec.html#Capabilities
 CapabilityBoundingSet=
@@ -45,8 +46,13 @@ MemoryDenyWriteExecute=yes
 RestrictRealtime=yes
 RestrictSUIDSGID=yes
 RemoveIPC=yes
+
+# https://www.freedesktop.org/software/systemd/man/systemd.exec.html#System%20Call%20Filtering
 SystemCallFilter=@basic-io brk fadvise64 @file-system getrandom ioctl @io-event madvise mprotect @network-io pipe @process @signal sysinfo uname
 SystemCallArchitectures=native
+
+# https://www.freedesktop.org/software/systemd/man/systemd.exec.html#Credentials
+LoadCredential=creds:/etc/evalr/creds
 
 
 [Install]
