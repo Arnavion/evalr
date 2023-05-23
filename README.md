@@ -17,7 +17,7 @@ Optional:
 # Install
 
 ```sh
-# Install binaries and systemd service, and create service user.
+# Install binaries and systemd service.
 sudo make install
 
 # Create creds file. "IRC_PASSWORD" is optional.
