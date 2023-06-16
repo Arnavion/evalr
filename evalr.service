@@ -48,7 +48,7 @@ RestrictSUIDSGID=yes
 RemoveIPC=yes
 
 # https://www.freedesktop.org/software/systemd/man/systemd.exec.html#System%20Call%20Filtering
-SystemCallFilter=@basic-io brk fadvise64 @file-system getrandom ioctl @io-event madvise mprotect @network-io pipe @process @signal sysinfo uname
+SystemCallFilter=~@clock @cpu-emulation @debug @module @mount @obsolete @privileged @raw-io @reboot @resources @swap
 SystemCallArchitectures=native
 
 # https://www.freedesktop.org/software/systemd/man/systemd.exec.html#Credentials
