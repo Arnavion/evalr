@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-# PLAYGROUND_BASE_URI='https://play.rust-lang.org/'
-PLAYGROUND_BASE_URI='https://play.integer32.com/'
+PLAYGROUND_BASE_URI='https://play.rust-lang.org/'
+# PLAYGROUND_BASE_URI='https://play.integer32.com/'
 
 message="$(cat)"
 
