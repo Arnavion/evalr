@@ -39,6 +39,11 @@ while :; do
 			message="${message#--2021}"
 			;;
 
+		'--2024'|'--2024 '*)
+			edition='2024'
+			message="${message#--2024}"
+			;;
+
 		'--nightly'|'--nightly '*)
 			channel='nightly'
 			message="${message#--nightly}"
