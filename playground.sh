@@ -10,7 +10,7 @@ message="$(cat)"
 attrs=()
 channel='stable'
 code=''
-edition='2021'
+edition='2024'
 mode='debug'
 
 while :; do
